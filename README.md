@@ -7,7 +7,7 @@ README
 
 Code Overview
 
-This code evaluates the Average Path Length Similarity (APLS) metric to measure the difference between ground truth and proposal graphs.  The metric sums the differences in optimal path lengths between all nodes in the ground truth graph G and the proposal graph G’.   See https://medium.com/the-downlinq/spacenet-road-detection-and-routing-challenge-part-i-d4f59d55bfce for further details. 
+This code evaluates the Average Path Length Similarity (APLS) metric to measure the difference between ground truth and proposal graphs.  The metric sums the differences in optimal path lengths between all nodes in the ground truth graph G and the proposal graph G’.   For further details, see [Blog1](https://medium.com/the-downlinq/spacenet-road-detection-and-routing-challenge-part-i-d4f59d55bfce) and [Blog2](https://medium.com/the-downlinq/spacenet-road-detection-and-routing-challenge-part-ii-apls-implementation-92acd86f4094).
 
 ==================
 
@@ -40,18 +40,44 @@ If graphTools.py is not installed (or more likely, if gdal is difficult to insta
 
 The example in main() is self-contained, and demonstrates the process to insert midpoints into ground truth and proposal graphs, get shortest paths, and then compute the metric.  
 
-Instructions for downloading SpaceNet data can be found here:
-https://github.com/SpaceNetChallenge/utilities/tree/master/content/download_instructions
+Instructions for downloading SpaceNet data can be found [here](https://github.com/SpaceNetChallenge/utilities/tree/master/content/download_instructions).
 
 ==================
 
-3.0:	Execution
+3.0:	apls.py Execution
 
 Use conda to install all packages https://conda.io/miniconda.html (currently tested with OSX and python 2)
 
-	# change line 10 of src/apls.py to reflect the apls directory
-	cd /path/to/apls/
-	conda env create -f apls_environment.yml
+	cd /path/to/apls/src
+	conda env create -f apls_environment.yml   # to deactivate environment: source deactivate
 	source activate apls_environment
-	python src/apls.py
-	# to deactivate environment: source deactivate
+	python apls.py 
+	# for further details: python apls.py --help
+	#     primary option will 'test_method', experiment with: 
+	#		 python apls.py test_method=pkl
+	#		 python apls.py test_method=test_geojson
+	#		 python apls.py test_method=osmnx
+			 
+
+
+==================
+
+4.0:	apls.py Outputs
+
+Running apls.py yields a number of plots in the example_output_ims directory, along with the APLS score
+
+![Alt text](/example_output_ims/pkl/RGB-PanSharpen_img1447/single_source_route_ground_truth.png?raw=true "Figure 1")
+
+![Alt text](/example_output_ims/pkl/RGB-PanSharpen_img1447/all_pairs_paths_diffs_prop_to_gt.png?raw=true "Figure 2")
+
+
+==================
+
+5.0:	create_spacenet_masks.py
+
+Run this script to create training masks with spacenet geojsons
+
+	cd /path/to/apls/src
+	python create_spacenet_masks.py
+	# results are saved in example_output_ims/AOI_2_Vegas_Train
+
