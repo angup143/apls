@@ -106,8 +106,8 @@ def plot_buff(G_, ax, buff=20, color='yellow', alpha=0.3,
     line_list = []    
     for u, v, key, data in G_.edges(keys=True, data=True):
         if verbose:
-            print "u, v, key:", u, v, key 
-            print "  data:", data
+            print("u, v, key:", u, v, key) 
+            print("  data:", data)
         geom = data['geometry']
         line_list.append(geom)
     
@@ -115,7 +115,7 @@ def plot_buff(G_, ax, buff=20, color='yellow', alpha=0.3,
     mls_buff = mls.buffer(buff)
 
     if verbose: 
-        print "type(mls_buff) == MultiPolygon:", type(mls_buff) == shapely.geometry.MultiPolygon
+        print("type(mls_buff) == MultiPolygon:", type(mls_buff) == shapely.geometry.MultiPolygon)
     
     if type(mls_buff) == shapely.geometry.Polygon:
         mls_buff_list = [mls_buff]
@@ -231,7 +231,7 @@ def convert_to_8Bit(inputRaster, outputRaster,
 
     cmd.append(inputRaster)
     cmd.append(outputRaster)
-    print "Conversin command:", cmd
+    print("Conversin command:", cmd)
     subprocess.call(cmd)
     
     return
@@ -262,7 +262,7 @@ def load_multiband_im(image_loc, method='gdal'):
         srcband = im_gdal.GetRasterBand(1)
         band_arr_tmp = srcband.ReadAsArray()
         if band_arr_tmp.dtype == 'uint16': 
-            print "cv2 cannot open 16 bit images"
+            print("cv2 cannot open 16 bit images")
             return []
         # ingest
         if nbands == 1:
@@ -270,7 +270,7 @@ def load_multiband_im(image_loc, method='gdal'):
         elif nbands == 3:
             img = cv2.imread(image_loc, 1)
         else:
-            print "cv2 cannot open images with", nbands, "bands"
+            print("cv2 cannot open images with", nbands, "bands")
             return []
 
     return img
