@@ -1,7 +1,5 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
-from spaceNetUtilities import geoTools as gT
-from spaceNetUtilities import labelTools as lT
 import apls_tools
 """
 Created on Tue Dec  5 16:56:31 2017
@@ -13,10 +11,11 @@ import os
 import sys
 import argparse
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
-code_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+code_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 sys.path.append(os.path.join(code_dir, 'spacenet',
-                             'utilities', 'python', 'spaceNetUtilities'))
-
+                             'utilities', 'python'))
+from spaceNetUtilities import geoTools as gT
+from spaceNetUtilities import labelTools as lT
 
 def processRasterChip(rasterImage, rasterDescription, geojson, geojsonDescription, outputDirectory='',
                       imagePixSize=-1, clipOverlap=0.0, randomClip=False,
@@ -95,9 +94,8 @@ def main():
         name_root = im_file.split('_')[-1].split('.')[0]
         label_file = os.path.join(path_labels, 'spacenetroads_AOI_3_Paris_'
                                   + name_root + '.geojson')
-
-        chipSummaryList = processRasterChip(im_file, path_images_raw,
-                                            label_file, args.geoJsonDirectory,
+        chipSummaryList = processRasterChip(os.path.join(path_images_raw,im_file), path_images_raw,
+                                            label_file, os.path.dirname(label_file),
                                             outputDirectory=path_outputs,
                                             imagePixSize=args.imgSizePix, clipOverlap=0.0, randomClip=False,
                                             minpartialPerc=0.0,
